@@ -1,0 +1,24 @@
+﻿databaseChangeLog:
+#region tables
+    - includeAll:
+        path: 001_public/001_tables/001_roles/
+    - includeAll:
+          path: 001_public/001_tables/002_users/
+    - includeAll:
+          path: 001_public/001_tables/003_true_shops/
+    - includeAll:
+          path: 001_public/001_tables/004_shops/
+    - includeAll:
+          path: 001_public/001_tables/005_true_products/
+    - includeAll:
+          path: 001_public/001_tables/006_products/
+    - includeAll:
+          path: 001_public/001_tables/007_checks/
+    - includeAll:
+          path: 001_public/001_tables/008_check_products/
+#endregion
+
+#region functions
+    - includeAll:
+          path: 001_public/002_functions/
+#endregion

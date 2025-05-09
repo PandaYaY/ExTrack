@@ -1,0 +1,5 @@
+﻿appsettings.*.json
+.idea
+obj
+bin
+liquibase.properties

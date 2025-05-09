@@ -1,0 +1,141 @@
+﻿{
+  "code": 1,
+  "first": 0,
+  "data": {
+    "json": {
+      "code": 3,
+      "user": "ООО \"АШАН\"",
+      "items": [
+        {
+          "nds": 2,
+          "sum": 8763,
+          "name": "НАП РАСТ HI С МИН",
+          "price": 8763,
+          "ndsSum": 797,
+          "quantity": 1,
+          "paymentType": 4,
+          "productType": 1,
+          "itemsQuantityMeasure": 0
+        },
+        {
+          "nds": 2,
+          "sum": 8763,
+          "name": "НАП РАСТ HI С МИН",
+          "price": 8763,
+          "ndsSum": 797,
+          "quantity": 1,
+          "paymentType": 4,
+          "productType": 1,
+          "itemsQuantityMeasure": 0
+        },
+        {
+          "nds": 1,
+          "sum": 11794,
+          "name": "НАП.COOLCOLA ZER.1,5",
+          "price": 11794,
+          "ndsSum": 1966,
+          "quantity": 1,
+          "paymentType": 4,
+          "productType": 33,
+          "productCodeNew": {
+            "gs1m": {
+              "gtin": "04600068052971",
+              "sernum": "5mQ;k3\"UzKDGG",
+              "productIdType": 6,
+              "rawProductCode": "0104600068052971215mQ;k3\"UzKDGG"
+            }
+          },
+          "labelCodeProcesMode": 0,
+          "itemsIndustryDetails": [
+            {
+              "idFoiv": "030",
+              "industryPropValue": "UUID=026e44a2-dffb-436e-869d-eb8a93d4a255&Time=1744218489063",
+              "foundationDocNumber": "1944",
+              "foundationDocDateTime": "21.11.2023"
+            }
+          ],
+          "itemsQuantityMeasure": 0,
+          "checkingProdInformationResult": 15
+        },
+        {
+          "nds": 1,
+          "sum": 20836,
+          "name": "БАНАНЫ ВЕСОВЫЕ",
+          "price": 15596,
+          "ndsSum": 3473,
+          "quantity": 1.336,
+          "paymentType": 4,
+          "productType": 1,
+          "itemsQuantityMeasure": 11
+        },
+        {
+          "nds": 2,
+          "sum": 7788,
+          "name": "СУРИМИ ПАЛОЧКИ ОХЛ",
+          "price": 7788,
+          "ndsSum": 708,
+          "quantity": 1,
+          "paymentType": 4,
+          "productType": 1,
+          "itemsQuantityMeasure": 0
+        }
+      ],
+      "nds10": 2302,
+      "nds18": 5439,
+      "fnsUrl": "www.nalog.gov.ru",
+      "region": "77",
+      "userInn": "7703270067  ",
+      "dateTime": "2025-04-09T20:07:00",
+      "kktRegId": "0002848592044289    ",
+      "metadata": {
+        "id": 5775028788409547776,
+        "ofdId": "ofd1",
+        "address": "109052,Россия,город федерального значения Москва,муниципальный округ Нижегородский вн.тер.г.,,,,Рязанский пр-кт,,д. 2,к. 2,,,",
+        "subtype": "receipt",
+        "receiveDate": "2025-04-09T17:08:58Z"
+      },
+      "totalSum": 57944,
+      "creditSum": 0,
+      "numberKkt": "0128029823",
+      "fiscalSign": 1310356009,
+      "prepaidSum": 0,
+      "retailPlace": "Гипермаркет АШАН",
+      "shiftNumber": 249,
+      "cashTotalSum": 0,
+      "provisionSum": 0,
+      "ecashTotalSum": 57944,
+      "machineNumber": "13-57446482",
+      "operationType": 1,
+      "redefine_mask": 0,
+      "requestNumber": 67,
+      "sellerAddress": "echeck@1-ofd.ru",
+      "fiscalDriveNumber": "7380440800939112",
+      "messageFiscalSign": 9.297204129454068e+18,
+      "operationalDetails": {
+        "operationId": 0,
+        "operationData": " ",
+        "operationDateTime": 1744229280
+      },
+      "retailPlaceAddress": "109052, г.Москва, Рязанский пр-кт, 2, к.2",
+      "appliedTaxationType": 1,
+      "buyerPhoneOrAddress": "artem-gali@mail.ru",
+      "fiscalDocumentNumber": 30641,
+      "fiscalDocumentFormatVer": 4,
+      "checkingLabeledProdResult": 0
+    },
+    "html": "<table class=\"b-check_table table\"><tbody><tr class=\"b-check_vblock-middle b-check_center\"><td colspan=\"5\">ООО \"АШАН\"</td></tr><tr class=\"b-check_vblock-middle b-check_center\"><td colspan=\"5\">109052, г.Москва, Рязанский пр-кт, 2, к.2</td></tr><tr class=\"b-check_vblock-middle b-check_center\"><td colspan=\"5\">ИНН 7703270067  </td></tr><tr class=\"b-check_vblock-middle b-check_center\"><td colspan=\"5\">&nbsp;</td></tr><tr class=\"b-check_vblock-middle b-check_center\"><td colspan=\"5\">09.04.2025 20:07</td></tr><tr class=\"b-check_vblock-middle b-check_center\"><td colspan=\"5\">Чек № 67</td></tr><tr class=\"b-check_vblock-middle b-check_center\"><td colspan=\"5\">Смена № 249</td></tr><tr class=\"b-check_vblock-middle b-check_center\"><td colspan=\"5\">Кассир </td></tr><tr class=\"b-check_vblock-last b-check_center\"><td colspan=\"5\">Приход</td></tr><tr><td><strong>№</strong></td><td><strong>Название</strong></td><td><strong>Цена</strong></td><td><strong>Кол.</strong></td><td><strong>Сумма</strong></td></tr><tr class=\"b-check_item\"><td>1</td><td>НАП РАСТ HI С МИН</td><td>87.63</td><td>1</td><td>87.63</td></tr><tr class=\"b-check_item\"><td>2</td><td>НАП РАСТ HI С МИН</td><td>87.63</td><td>1</td><td>87.63</td></tr><tr class=\"b-check_item\"><td>3</td><td>НАП.COOLCOLA ZER.1,5</td><td>117.94</td><td>1</td><td>117.94</td></tr><tr class=\"b-check_item\"><td>4</td><td>БАНАНЫ ВЕСОВЫЕ</td><td>155.96</td><td>1.336</td><td>208.36</td></tr><tr class=\"b-check_item\"><td>5</td><td>СУРИМИ ПАЛОЧКИ ОХЛ</td><td>77.88</td><td>1</td><td>77.88</td></tr><tr class=\"b-check_vblock-first\"><td colspan=\"3\" class=\"b-check_itogo\">ИТОГО:</td><td></td><td class=\"b-check_itogo\">579.44</td></tr><tr class=\"b-check_vblock-middle\"><td colspan=\"3\">Наличные</td><td></td><td>0.00</td></tr><tr class=\"b-check_vblock-middle\"><td colspan=\"3\">Карта</td><td></td><td>579.44</td></tr><tr class=\"b-check_vblock-middle\"><td colspan=\"3\">НДС итога чека со ставкой 20%</td><td></td><td>54.39</td></tr><tr class=\"b-check_vblock-middle\"><td colspan=\"3\">НДС итога чека со ставкой 10%</td><td></td><td>23.02</td></tr><tr class=\"b-check_vblock-last\"><td colspan=\"5\">ВИД НАЛОГООБЛОЖЕНИЯ: ОСН</td></tr><tr class=\"b-check_vblock-first\"><td colspan=\"5\">РЕГ.НОМЕР ККТ: 0002848592044289    </td></tr><tr class=\"b-check_vblock-middle\"><td colspan=\"5\">ЗАВОД. №: </td></tr><tr class=\"b-check_vblock-middle\"><td colspan=\"5\">ФН: 7380440800939112</td></tr><tr class=\"b-check_vblock-middle\"><td colspan=\"5\">ФД: 30641</td></tr><tr class=\"b-check_vblock-middle\"><td colspan=\"5\">ФПД#: 1310356009</td></tr><tr class=\"b-check_vblock-last\"><td colspan=\"5\" class=\"b-check_center\"><img src=\"/qrcode/generate?text=t%3D20250409T2007%26s%3D579.44%26fn%3D7380440800939112%26i%3D30641%26fp%3D1310356009%26n%3D1\" alt=\"QR код чека\" width=\"35%\" loading=\"lazy\" decoding=\"async\"></td></tr></tbody></table>"
+  },
+  "request": {
+    "qrurl": "",
+    "qrfile": "",
+    "qrraw": "",
+    "manual": {
+      "fn": "7380440800939112",
+      "fd": "30641",
+      "fp": "1310356009",
+      "check_time": "09.04.2025 20:07",
+      "type": "1",
+      "sum": "579.44"
+    }
+  }
+}
