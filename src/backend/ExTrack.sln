@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExTrack.Repositories", "ExTrack\ExTrack.Repositories\ExTrack.Repositories.csproj", "{202C9F05-1C40-43A1-8FDD-D5E8DD186EF9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProverkaCheka", "ProverkaCheka", "{27DDF95F-C658-4C9A-8ED3-B51B3C8685DC}"
+	ProjectSection(SolutionItems) = preProject
+		ProverkaCheka\ReadMe.md = ProverkaCheka\ReadMe.md
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProverkaCheka.Client", "ProverkaCheka\ProverkaCheka.Client\ProverkaCheka.Client.csproj", "{7B4E4406-1D25-4906-BB17-0AF9F20E666D}"
 EndProject
