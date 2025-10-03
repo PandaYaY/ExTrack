@@ -34,7 +34,7 @@ ProverkaCheka - это .NET библиотека для интеграции с 
 
 ```json
 {
-  "ProverkaChecka": {
+  "ProverkaCheka": {
     "BaseUrl": "https://proverkacheka.com",
     "Timeout": "00:00:30",
     "AccessToken": "YOUR_ACCESS_TOKEN"

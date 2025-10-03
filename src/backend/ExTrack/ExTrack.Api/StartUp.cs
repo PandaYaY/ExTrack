@@ -1,11 +1,8 @@
 ﻿using Dapper;
-using ExTrack.Repositories;
+using ExTrack.Users.Infrastructure;
 using Serilog;
 using Serilog.Exceptions;
-using ExTrack.Service;
 using Npgsql;
-using SqlKata.Compilers;
-using SqlKata.Execution;
 
 namespace ExTrack.Api;
 
@@ -14,14 +11,14 @@ public class StartUp
     private readonly bool _isDev = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
 
     private readonly WebApplicationBuilder _appBuilder;
-    private readonly ConfigurationManager  _configuration;
-    private readonly IServiceCollection    _services;
+    private readonly ConfigurationManager _configuration;
+    private readonly IServiceCollection _services;
 
     public StartUp()
     {
-        _appBuilder    = WebApplication.CreateBuilder();
+        _appBuilder = WebApplication.CreateBuilder();
         _configuration = _appBuilder.Configuration;
-        _services      = _appBuilder.Services;
+        _services = _appBuilder.Services;
     }
 
     public WebApplication InitApplication()
@@ -36,7 +33,14 @@ public class StartUp
     private WebApplication ConfigureWebApi()
     {
         _services.AddControllers()
-                 .AddJsonOptions(options => { options.JsonSerializerOptions.PropertyNamingPolicy = null; });
+            .AddJsonOptions(options => { options.JsonSerializerOptions.PropertyNamingPolicy = null; });
+
+        _services.AddApiVersioning(options =>
+        {
+            // reporting api versions will return the headers
+            // "api-supported-versions" and "api-deprecated-versions"
+            options.ReportApiVersions = true;
+        }).AddMvc();
 
         _services.AddEndpointsApiExplorer();
         _services.AddSwaggerGen();
@@ -58,18 +62,16 @@ public class StartUp
 
     private void ConfigureServices()
     {
-        _services.AddCheckService(_configuration);
-
-        _services.AddSingleton<IUsersRepository, UsersRepository>();
+        _services.AddUsersService();
     }
 
     private void ConfigureLogger()
     {
         _appBuilder.Host.UseSerilog((context, services, configuration) =>
-                                        configuration.ReadFrom.Configuration(context.Configuration)
-                                                     .ReadFrom.Services(services)
-                                                     .Enrich.WithExceptionDetails()
-                                                     .Enrich.FromLogContext());
+            configuration.ReadFrom.Configuration(context.Configuration)
+                .ReadFrom.Services(services)
+                .Enrich.WithExceptionDetails()
+                .Enrich.FromLogContext());
     }
 
     private void ConfigureDbs()
@@ -80,12 +82,7 @@ public class StartUp
             throw new ArgumentNullException(nameof(connectionString), "Connection string \"ex_track\" is null");
         }
 
-        _services.AddTransient<QueryFactory>(sp =>
-        {
-            var connection = new NpgsqlConnection(connectionString);
-            var compiler   = new PostgresCompiler();
-            return new QueryFactory(connection, compiler);
-        });
+        _services.AddScoped<NpgsqlConnection>(_ => new NpgsqlConnection(connectionString));
 
         DefaultTypeMap.MatchNamesWithUnderscores = true;
     }

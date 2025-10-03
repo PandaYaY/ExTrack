@@ -9,8 +9,8 @@ public static class ServiceRegistration
     public static IServiceCollection AddProverkaChekaClient(this IServiceCollection services,
                                                                  IConfiguration          configuration)
     {
-        var config = configuration.GetSection("ProverkaChecka").Get<ProverkaCheckaClientConfiguration>() ??
-                     throw new ArgumentNullException(nameof(configuration), "ProverkaChecka configuration is missing");
+        var config = configuration.GetSection("ProverkaCheka").Get<ProverkaCheckaClientConfiguration>() ??
+                     throw new ArgumentNullException(nameof(configuration), "ProverkaCheka configuration is missing");
 
         services.AddRefitClient<IProverkaChekaClient>()
                 .ConfigureHttpClient(c =>

@@ -9,7 +9,6 @@
     <ItemGroup>
       <ProjectReference Include="..\..\ProverkaCheka\ProverkaCheka.Client\ProverkaCheka.Client.csproj" />
       <ProjectReference Include="..\..\ProverkaCheka\ProverkaCheka.Dto\ProverkaCheka.Dto.csproj" />
-      <ProjectReference Include="..\ExTrack.Repositories\ExTrack.Repositories.csproj" />
     </ItemGroup>
 
 </Project>
