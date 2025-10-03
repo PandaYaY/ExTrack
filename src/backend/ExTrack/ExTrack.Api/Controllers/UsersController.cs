@@ -1,12 +1,10 @@
-﻿using Asp.Versioning;
-using ExTrack.Api.Dto;
+﻿using ExTrack.Api.Dto;
 using ExTrack.Users;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExTrack.Api.Controllers;
 
 [Route(ControllerRoute)]
-[ApiVersion("1.0")]
 public class UsersController(IUsersService service) : BaseController
 {
     [HttpGet("{userId:int}")]
