@@ -1,4 +1,4 @@
-﻿using ExTrack.Api.Dto;
+﻿using ExTrack.Api.Dto.Users;
 using ExTrack.Users;
 using Microsoft.AspNetCore.Mvc;
 

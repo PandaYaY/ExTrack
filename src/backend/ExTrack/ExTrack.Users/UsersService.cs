@@ -9,7 +9,7 @@ namespace ExTrack.Users;
 public interface IUsersService
 {
     Task<UserEntity?> GetUserById(int userId);
-    Task<UserEntity> CreateUser(Role role, string login, string passwordHash);
+    Task<UserEntity>  CreateUser(Role role, string login, string passwordHash);
 }
 
 public partial class UsersService(ILogger<UsersService> logger, IUsersRepository repository) : IUsersService
@@ -39,6 +39,7 @@ public partial class UsersService(ILogger<UsersService> logger, IUsersRepository
             {
                 throw new ArgumentException(exception.MessageText, nameof(role));
             }
+
             logger.LogError(exception, "Unknown PostgresException while create user");
             throw;
         }
@@ -51,6 +52,7 @@ public partial class UsersService(ILogger<UsersService> logger, IUsersRepository
 
     [GeneratedRegex("""Пользователь с логином ".*" уже существует""")]
     private static partial Regex ExistingUserRegexp();
+
     [GeneratedRegex("""Пользователь с логином ".*" уже существует""")]
     private static partial Regex NonExistingRole();
 }

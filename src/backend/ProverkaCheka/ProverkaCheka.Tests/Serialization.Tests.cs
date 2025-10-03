@@ -7,9 +7,9 @@ namespace ProverkaCheka.Test;
 [TestFixture]
 public class SerializationTests
 {
-    private          JObject               _responseJson;
-    private          GetCheckInfoRequestDto       _requestDto;
-    private readonly JsonSerializerOptions _options = new() { WriteIndented = true };
+    private          JObject                _responseJson;
+    private          GetCheckInfoRequestDto _requestDto;
+    private readonly JsonSerializerOptions  _options = new() { WriteIndented = true };
 
     [OneTimeSetUp]
     public void Setup()
@@ -19,17 +19,11 @@ public class SerializationTests
         var responseJson = File.ReadAllText(path);
         _responseJson = JObject.Parse(responseJson);
 
-        _requestDto = new GetCheckInfoRequestDto("testToken",
-                                          7380440800939112,
-                                          30641,
-                                          1310356009,
-                                          "09.04.2025 20:07",
-                                          OperationType.Prihod,
-                                          579.44,
-                                          false);
+        _requestDto = new GetCheckInfoRequestDto("testToken", 7380440800939112, 30641, 1310356009, "09.04.2025 20:07",
+                                                 OperationType.Prihod, 579.44, false);
     }
 
-    #region Response Deserialization
+#region Response Deserialization
 
     [Test]
     public void TestRequestDataDtoDeserialization()
@@ -105,10 +99,10 @@ public class SerializationTests
     public void TestCheckInfoJsonDtoDeserialization()
     {
         var json = _responseJson["data"]?["json"]?.ToString();
-        Assert.That(json, Is.Not.Null, "JSON для CheckInfoJsonDto не должен быть null");
+        Assert.That(json, Is.Not.Null, "JSON для CheckInfoDataJsonDto не должен быть null");
 
-        var checkInfoJson = JsonSerializer.Deserialize<CheckInfoJsonDto>(json);
-        Assert.That(checkInfoJson, Is.Not.Null, "Объект CheckInfoJsonDto не должен быть null");
+        var checkInfoJson = JsonSerializer.Deserialize<CheckInfoDataJsonDto>(json);
+        Assert.That(checkInfoJson, Is.Not.Null, "Объект CheckInfoDataJsonDto не должен быть null");
 
         Assert.Multiple(() =>
         {
@@ -133,17 +127,17 @@ public class SerializationTests
     {
         var json = _responseJson["data"]?.ToString();
         var html = _responseJson["data"]?["html"]?.ToString();
-        Assert.That(json, Is.Not.Null, "JSON для CheckInfoDto не должен быть null");
+        Assert.That(json, Is.Not.Null, "JSON для CheckInfoDataDto не должен быть null");
 
-        var checkInfo = JsonSerializer.Deserialize<CheckInfoDto>(json);
-        Assert.That(checkInfo, Is.Not.Null, "Объект CheckInfoDto не должен быть null");
+        var checkInfo = JsonSerializer.Deserialize<CheckInfoDataDto>(json);
+        Assert.That(checkInfo, Is.Not.Null, "Объект CheckInfoDataDto не должен быть null");
 
         Assert.Multiple(() =>
         {
-            Assert.That(checkInfo.Json, Is.Not.Null, "Значение Json не должно быть null");
-            Assert.That(checkInfo.Json.GetType(), Is.EqualTo(typeof(CheckInfoJsonDto)),
-                        "Значение Json должно быть CheckInfoJsonDto");
-            Assert.That(checkInfo.Html, Is.EqualTo(html), "Значение RetailPlace не соответствует ожидаемому");
+            Assert.That(checkInfo.JsonData, Is.Not.Null, "Значение JsonData не должно быть null");
+            Assert.That(checkInfo.JsonData.GetType(), Is.EqualTo(typeof(CheckInfoDataJsonDto)),
+                        "Значение JsonData должно быть CheckInfoDataJsonDto");
+            Assert.That(checkInfo.HtmlData, Is.EqualTo(html), "Значение RetailPlace не соответствует ожидаемому");
         });
     }
 
@@ -162,17 +156,17 @@ public class SerializationTests
                         "Значение StatusCode не соответствует ожидаемому");
             Assert.That(getCheckInfoResponse.IsFirst, Is.False, "Значение IsFirst не соответствует ожидаемому");
             Assert.That(getCheckInfoResponse.Data, Is.Not.Null, "Значение Data не должно быть null");
-            Assert.That(getCheckInfoResponse.Data.GetType(), Is.EqualTo(typeof(CheckInfoDto)),
-                        "Значение Data должно быть CheckInfoDto");
+            Assert.That(getCheckInfoResponse.Data.GetType(), Is.EqualTo(typeof(CheckInfoDataDto)),
+                        "Значение Data должно быть CheckInfoDataDto");
             Assert.That(getCheckInfoResponse.RequestInfo, Is.Not.Null, "Значение RequestInfo не должно быть null");
             Assert.That(getCheckInfoResponse.RequestInfo.GetType(), Is.EqualTo(typeof(RequestInfoDto)),
                         "Значение RequestInfo должно быть RequestInfoDto");
         });
     }
 
-    #endregion
+#endregion
 
-    #region Request Serialization
+#region Request Serialization
 
     [Test]
     public void TestGetCheckInfoDtoSerialization()
@@ -195,5 +189,5 @@ public class SerializationTests
         Assert.That(json, Is.EqualTo(finalJson));
     }
 
-    #endregion
+#endregion
 }

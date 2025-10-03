@@ -8,15 +8,15 @@ namespace ExTrack.Users;
 public interface IUsersRepository
 {
     Task<UserEntity?> GetUserById(int id);
-    Task<UserEntity> CreateUser(Role roleId, string login, string passwordHash);
+    Task<UserEntity>  CreateUser(Role roleId, string login, string passwordHash);
 }
 
 public class UsersRepository(NpgsqlConnection connection) : IUsersRepository
 {
     public async Task<UserEntity?> GetUserById(int id)
     {
-        const string sql = "select id, role_id, login, hash_password from users where id = @id";
-        var user = await connection.QueryFirstOrDefaultAsync<UserEntity>(sql, new { id });
+        const string sql  = "select id, role_id, login, hash_password from users where id = @id";
+        var          user = await connection.QueryFirstOrDefaultAsync<UserEntity>(sql, new { id });
         return user;
     }
 

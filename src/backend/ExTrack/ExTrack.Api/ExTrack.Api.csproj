@@ -21,6 +21,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ExTrack.Api.Dto\ExTrack.Api.Dto.csproj" />
+      <ProjectReference Include="..\ExTrack.Checks\ExTrack.Checks.csproj" />
       <ProjectReference Include="..\ExTrack.Users\ExTrack.Users.csproj" />
     </ItemGroup>
 

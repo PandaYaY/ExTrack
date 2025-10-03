@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using ExTrack.Checks.Infrastructure;
 using ExTrack.Users.Infrastructure;
 using Serilog;
 using Serilog.Exceptions;
@@ -12,14 +13,14 @@ public class StartUp
     private readonly bool _isDev = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
 
     private readonly WebApplicationBuilder _appBuilder;
-    private readonly ConfigurationManager _configuration;
-    private readonly IServiceCollection _services;
+    private readonly ConfigurationManager  _configuration;
+    private readonly IServiceCollection    _services;
 
     public StartUp()
     {
-        _appBuilder = WebApplication.CreateBuilder();
+        _appBuilder    = WebApplication.CreateBuilder();
         _configuration = _appBuilder.Configuration;
-        _services = _appBuilder.Services;
+        _services      = _appBuilder.Services;
     }
 
     public WebApplication InitApplication()
@@ -34,14 +35,15 @@ public class StartUp
     private WebApplication ConfigureWebApi()
     {
         _services.AddControllers()
-            .AddJsonOptions(options => { options.JsonSerializerOptions.PropertyNamingPolicy = null; });
+                 .AddJsonOptions(options => { options.JsonSerializerOptions.PropertyNamingPolicy = null; });
 
         _services.AddApiVersioning(options =>
-        {
-            // reporting api versions will return the headers
-            // "api-supported-versions" and "api-deprecated-versions"
-            options.ReportApiVersions = true;
-        }).AddMvc();
+                  {
+                      // reporting api versions will return the headers
+                      // "api-supported-versions" and "api-deprecated-versions"
+                      options.ReportApiVersions = true;
+                  })
+                 .AddMvc();
 
         _services.AddEndpointsApiExplorer();
         _services.AddSwaggerGen();
@@ -64,16 +66,17 @@ public class StartUp
 
     private void ConfigureServices()
     {
-        _services.AddUsersService();
+        _services.AddUsersService()
+                 .AddChecksService(_configuration);
     }
 
     private void ConfigureLogger()
     {
         _appBuilder.Host.UseSerilog((context, services, configuration) =>
-            configuration.ReadFrom.Configuration(context.Configuration)
-                .ReadFrom.Services(services)
-                .Enrich.WithExceptionDetails()
-                .Enrich.FromLogContext());
+                                        configuration.ReadFrom.Configuration(context.Configuration)
+                                                     .ReadFrom.Services(services)
+                                                     .Enrich.WithExceptionDetails()
+                                                     .Enrich.FromLogContext());
     }
 
     private void ConfigureDbs()

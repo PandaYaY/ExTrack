@@ -12,13 +12,19 @@ public enum OperationType
 }
 
 public record GetCheckInfoRequestDto(
-    [property: JsonPropertyName("token")] string        Token,
-    [property: JsonPropertyName("fn")]    long          Fn,
-    [property: JsonPropertyName("fd")]    long          Fd,
-    [property: JsonPropertyName("fp")]    long          Fp,
-    [property: JsonPropertyName("t")]     string        Timestamp,
-    [property: JsonPropertyName("n")]     OperationType OperationType,
-    [property: JsonPropertyName("s")]     double        Sum,
-    [property: JsonPropertyName("qr")]
-    [property: JsonConverter(typeof(IntToBoolConverter))]
+    [property: JsonPropertyName("token")]
+    string Token,
+    [property: JsonPropertyName("fn")]
+    long Fn,
+    [property: JsonPropertyName("fd")]
+    long Fd,
+    [property: JsonPropertyName("fp")]
+    long Fp,
+    [property: JsonPropertyName("t")]
+    string Timestamp,
+    [property: JsonPropertyName("n")]
+    OperationType OperationType,
+    [property: JsonPropertyName("s")]
+    double Sum,
+    [property: JsonPropertyName("qr"), JsonConverter(typeof(IntToBoolConverter))]
     bool IsQr);

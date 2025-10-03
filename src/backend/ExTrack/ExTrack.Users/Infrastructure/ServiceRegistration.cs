@@ -10,7 +10,7 @@ public static class ServiceRegistration
     public static IServiceCollection AddUsersService(this IServiceCollection services)
     {
         services.AddUsersRepository()
-            .AddScoped<IUsersService, UsersService>();
+                .AddScoped<IUsersService, UsersService>();
 
         return services;
     }
