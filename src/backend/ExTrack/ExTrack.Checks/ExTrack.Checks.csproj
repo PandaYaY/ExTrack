@@ -14,6 +14,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\ProverkaCheka\ProverkaCheka.Client\ProverkaCheka.Client.csproj" />
+      <ProjectReference Include="..\ExTrack.Api.Dto\ExTrack.Api.Dto.csproj" />
     </ItemGroup>
 
 </Project>

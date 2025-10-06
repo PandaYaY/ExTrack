@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Infrastructure\Infrastructure.DataTypes\Infrastructure.DataTypes.csproj" />
+      <ProjectReference Include="..\..\ProverkaCheka\ProverkaCheka.Dto\ProverkaCheka.Dto.csproj" />
     </ItemGroup>
 
 </Project>

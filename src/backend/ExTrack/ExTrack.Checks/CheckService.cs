@@ -1,6 +1,8 @@
 ﻿using System.Text.Json;
+using ExTrack.Api.Dto.Checks;
 using ExTrack.Checks.Models;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using ProverkaCheka.Client;
 using ProverkaCheka.Dto;
 
@@ -8,16 +10,34 @@ namespace ExTrack.Checks;
 
 public interface IChecksService
 {
-    Task GetCheckInfoAsync(GetCheckInfoRequestDto dto);
+    Task<CheckEntity?>      GetCheckById(int                  checkId);
+    Task<List<CheckEntity>> GetUserChecks(int                 userId, int page);
+    Task<int>               GetCheckInfoAsync(GetCheckInfoDto checkInfoDto);
 }
 
 public class ChecksService(
-    ILogger<ChecksService> logger,
-    IProverkaChekaClient   proverkaChekaClient,
-    IChecksRepository      checksRepository) : IChecksService
+    ILogger<ChecksService>                     logger,
+    IProverkaChekaClient                       proverkaChekaClient,
+    IChecksRepository                          checksRepository,
+    IOptions<ProverkaChekaClientConfiguration> proverkaChekaConfig) : IChecksService
 {
-    public async Task GetCheckInfoAsync(GetCheckInfoRequestDto dto)
+    private readonly string _accessToken = proverkaChekaConfig.Value.AccessToken;
+
+    public async Task<CheckEntity?> GetCheckById(int checkId)
     {
+        var check = await checksRepository.GetCheckById(checkId);
+        return check;
+    }
+
+    public async Task<List<CheckEntity>> GetUserChecks(int userId, int page)
+    {
+        var checks = await checksRepository.GetUserChecks(userId, page);
+        return checks;
+    }
+
+    public async Task<int> GetCheckInfoAsync(GetCheckInfoDto checkInfoDto)
+    {
+        var dto                  = ConvertToGetCheckInfoRequestDto(checkInfoDto);
         var getCheckInfoResponse = await proverkaChekaClient.GetCheckInfo(dto);
         if (getCheckInfoResponse.StatusCode is not ScanResultEnum.Success)
         {
@@ -27,14 +47,23 @@ public class ChecksService(
         }
 
         var checkInfo = ConvertToCheckInfo(getCheckInfoResponse);
-        await checksRepository.AddCheckInfo(checkInfo);
+        var checkId   = await checksRepository.AddCheckInfo(checkInfoDto.UserId, checkInfo);
+        return checkId;
     }
 
-    private CheckInfo ConvertToCheckInfo(GetCheckInfoResponseDto response)
+    private static CheckInfo ConvertToCheckInfo(GetCheckInfoResponseDto response)
     {
         var data = response.Data.JsonData;
-        var products = data.Items.Select(item => new CheckProduct(item.Name, item.Price, item.Sum, item.Quantity))
-                           .ToList();
-        return new CheckInfo(data.RetailPlace, data.RetailPlaceAddress, data.Timestamp, data.Sum, products);
+        var products =
+            data.Items.ConvertAll(item => new CheckProduct(item.Name, item.Price / 100.0, item.Sum / 100.0,
+                                                           item.Quantity));
+        return new CheckInfo(data.RetailPlace, data.RetailPlaceAddress, data.Timestamp, data.Sum / 100.0, products);
+    }
+
+    private GetCheckInfoRequestDto ConvertToGetCheckInfoRequestDto(GetCheckInfoDto dto)
+    {
+        return new GetCheckInfoRequestDto(_accessToken, dto.FiscalStorageDeviceNumber, dto.FiscalDocumentNumber,
+                                          dto.DocumentFiscalAttribute, dto.Timestamp, dto.OperationType, dto.Sum,
+                                          IsQr: false);
     }
 }

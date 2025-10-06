@@ -1,10 +1,25 @@
-﻿namespace ExTrack.Checks.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace ExTrack.Checks.Models;
 
 public record CheckInfo(
-    string             ShopName,
-    string             ShopAddress,
-    DateTime           CheckDate,
-    long               TotalSum,
+    [property: JsonPropertyName("shop_name")]
+    string ShopName,
+    [property: JsonPropertyName("shop_address")]
+    string ShopAddress,
+    [property: JsonPropertyName("check_date")]
+    DateTime CheckDate,
+    [property: JsonPropertyName("total_sum")]
+    double TotalSum,
+    [property: JsonPropertyName("products")]
     List<CheckProduct> Products);
 
-public record CheckProduct(string Name, long Price, long TotalPrice, double Quantity);
+public record CheckProduct(
+    [property: JsonPropertyName("name")]
+    string Name,
+    [property: JsonPropertyName("price")]
+    double Price,
+    [property: JsonPropertyName("total_price")]
+    double TotalPrice,
+    [property: JsonPropertyName("quantity")]
+    double Quantity);

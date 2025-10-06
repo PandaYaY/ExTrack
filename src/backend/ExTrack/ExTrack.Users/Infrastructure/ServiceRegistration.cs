@@ -18,11 +18,11 @@ public static class ServiceRegistration
     private static IServiceCollection AddUsersRepository(this IServiceCollection services)
     {
         services.AddScoped<IUsersRepository, UsersRepository>();
-        RegisterRepositoryTypes();
+        RegisterUsersRepositoryTypes();
         return services;
     }
 
-    private static void RegisterRepositoryTypes()
+    private static void RegisterUsersRepositoryTypes()
     {
         SqlMapper.AddTypeHandler(new EnumAsNumberTypeHandler<Role, short>());
     }

@@ -73,7 +73,7 @@ public record RequestDataDto(
     [property: JsonPropertyName("check_time")]
     string Timestamp,
     [property: JsonPropertyName("type")]
-    string OperationType,
+    int OperationType,
     [property: JsonPropertyName("sum")]
     string Sum);
 

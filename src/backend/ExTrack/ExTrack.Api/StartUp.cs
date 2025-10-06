@@ -1,9 +1,9 @@
 ﻿using Dapper;
 using ExTrack.Checks.Infrastructure;
 using ExTrack.Users.Infrastructure;
+using Npgsql;
 using Serilog;
 using Serilog.Exceptions;
-using Npgsql;
 using SwaggerThemes;
 
 namespace ExTrack.Api;

@@ -1,6 +1,6 @@
 ﻿namespace ProverkaCheka.Client;
 
-public record ProverkaCheckaClientConfiguration
+public record ProverkaChekaClientConfiguration
 {
     public required Uri      BaseUrl     { get; init; }
     public required TimeSpan Timeout     { get; init; }

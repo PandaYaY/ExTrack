@@ -15,11 +15,11 @@ public record GetCheckInfoRequestDto(
     [property: JsonPropertyName("token")]
     string Token,
     [property: JsonPropertyName("fn")]
-    long Fn,
+    long FiscalStorageDeviceNumber,
     [property: JsonPropertyName("fd")]
-    long Fd,
+    long FiscalDocumentNumber,
     [property: JsonPropertyName("fp")]
-    long Fp,
+    long DocumentFiscalAttribute,
     [property: JsonPropertyName("t")]
     string Timestamp,
     [property: JsonPropertyName("n")]

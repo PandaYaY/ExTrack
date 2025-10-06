@@ -1,5 +1,4 @@
 ﻿databaseChangeLog:
-  #region tables
   - include:
       file: 001_public/001_tables/001_roles/001_table.sql
   - include:
@@ -33,3 +32,7 @@
       file: 001_public/002_functions/001_create_user.sql
   - include:
       file: 001_public/002_functions/002_upsert_shop.sql
+  - include:
+      file: 001_public/002_functions/003_upsert_product.sql
+  - include:
+      file: 001_public/002_functions/004_add_check_info.sql

@@ -1,5 +1,16 @@
-﻿appsettings.*.json
+﻿# JetBrains
 .idea
+*.DotSettings.user
+
+# Logs
+logs
+*.log
+
+# DB
+liquibase.properties
+
+# backend C#
+appsettings.*.json
 obj
 bin
 liquibase.properties
