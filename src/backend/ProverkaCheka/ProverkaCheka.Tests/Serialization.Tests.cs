@@ -41,8 +41,7 @@ public class SerializationTests
             Assert.That(requestData.Fp, Is.EqualTo("1310356009"), "Значение Fp не соответствует ожидаемому");
             Assert.That(requestData.Timestamp, Is.EqualTo("09.04.2025 20:07"),
                         "Значение Timestamp не соответствует ожидаемому");
-            Assert.That(requestData.OperationType, Is.EqualTo("1"),
-                        "Значение OperationType не соответствует ожидаемому");
+            Assert.That(requestData.OperationType, Is.EqualTo(1), "Значение OperationType не соответствует ожидаемому");
             Assert.That(requestData.Sum, Is.EqualTo("579.44"), "Значение Sum не соответствует ожидаемому");
         });
     }

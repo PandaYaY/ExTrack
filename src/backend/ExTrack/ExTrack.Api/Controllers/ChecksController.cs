@@ -15,10 +15,11 @@ public class ChecksController(ILogger<ChecksController> logger, IChecksService c
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetUserChecks([FromQuery(Name = "user_id")] int userId,
-                                                   [FromQuery(Name = "page")]    int page = 1)
+    public async Task<IActionResult> GetUserChecks([FromQuery(Name = "user_id")]  int userId,
+                                                   [FromQuery(Name = "page")]     int page    = 1,
+                                                   [FromQuery(Name = "per_page")] int perPage = 10)
     {
-        var checks = await checksService.GetUserChecks(userId, page);
+        var checks = await checksService.GetUserChecks(userId, page, perPage);
         return Ok(checks);
     }
 

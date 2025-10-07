@@ -11,7 +11,7 @@ namespace ExTrack.Checks;
 public interface IChecksService
 {
     Task<CheckEntity?>      GetCheckById(int                  checkId);
-    Task<List<CheckEntity>> GetUserChecks(int                 userId, int page);
+    Task<List<CheckEntity>> GetUserChecks(int                 userId, int page, int perPage);
     Task<int>               GetCheckInfoAsync(GetCheckInfoDto checkInfoDto);
 }
 
@@ -29,9 +29,9 @@ public class ChecksService(
         return check;
     }
 
-    public async Task<List<CheckEntity>> GetUserChecks(int userId, int page)
+    public async Task<List<CheckEntity>> GetUserChecks(int userId, int page, int perPage)
     {
-        var checks = await checksRepository.GetUserChecks(userId, page);
+        var checks = await checksRepository.GetUserChecks(userId, page, perPage);
         return checks;
     }
 

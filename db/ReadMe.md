@@ -55,7 +55,7 @@ liquibase update
 ```
 db/
 └── Migrations/
-    └── [changesets]
+    └── [...changesets]
 ├── db-changelog.yaml
 ├── liquibase.properties
 └── ReadMe.md

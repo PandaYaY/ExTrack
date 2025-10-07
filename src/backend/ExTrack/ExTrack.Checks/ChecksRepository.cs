@@ -8,7 +8,7 @@ namespace ExTrack.Checks;
 public interface IChecksRepository
 {
     Task<CheckEntity?>      GetCheckById(int  checkId);
-    Task<List<CheckEntity>> GetUserChecks(int userId, int       page);
+    Task<List<CheckEntity>> GetUserChecks(int userId, int       page, int perPage);
     Task<int>               AddCheckInfo(int  userId, CheckInfo checkInfo);
 }
 
@@ -58,11 +58,10 @@ public class ChecksRepository(NpgsqlConnection connection) : IChecksRepository
         return check;
     }
 
-    public async Task<List<CheckEntity>> GetUserChecks(int userId, int page)
+    public async Task<List<CheckEntity>> GetUserChecks(int userId, int page, int perPage)
     {
-        const int pageLimit = 10;
-        var offset = pageLimit * (page - 1);
-        var checks = await connection.QueryAsync<CheckEntity>(UserChecksSql, new { userId, limit = pageLimit, offset });
+        var offset = perPage * (page - 1);
+        var checks = await connection.QueryAsync<CheckEntity>(UserChecksSql, new { userId, limit = perPage, offset });
         return checks.ToList();
     }
 
