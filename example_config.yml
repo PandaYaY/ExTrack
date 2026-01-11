@@ -1,0 +1,5 @@
+port: 8080
+proverkaChecka:
+  baseUrl: https://proverkacheka.com
+  token: secret_token
+  timeoutSeconds: 5s
