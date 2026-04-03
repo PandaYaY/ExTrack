@@ -18,3 +18,12 @@ alter table public.users
     alter column id set default nextval('public.users_id_seq');
 alter sequence users_id_seq owned by public.users.id;
 --rollback ;
+
+--changeset agalimianov:3
+alter table public.users rename column login to email;
+--rollback ;
+
+--changeset agalimianov:4
+alter table public.users add column name text not null default '';
+alter table public.users alter column name drop default;
+--rollback ;

@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using ExTrack.Checks.Infrastructure;
-using ExTrack.Users.Infrastructure;
 using Npgsql;
 using Serilog;
 using Serilog.Exceptions;
@@ -34,6 +33,18 @@ public class StartUp
 
     private WebApplication ConfigureWebApi()
     {
+        // Настройка CORS
+        _services.AddCors(options =>
+        {
+            options.AddPolicy("AllowFrontend", policy =>
+            {
+                policy.WithOrigins("http://localhost:3000")
+                      .AllowAnyHeader()
+                      .AllowAnyMethod()
+                      .AllowCredentials();
+            });
+        });
+
         _services.AddControllers()
                  .AddJsonOptions(options => { options.JsonSerializerOptions.PropertyNamingPolicy = null; });
 
@@ -50,6 +61,9 @@ public class StartUp
 
         var app = _appBuilder.Build();
 
+        // Использование CORS
+        app.UseCors("AllowFrontend");
+
         // Add Swagger if is dev
         if (_isDev)
         {
@@ -58,16 +72,15 @@ public class StartUp
             app.UseSwaggerUI(Theme.Gruvbox);
         }
 
-        app.MapControllers();
         app.UseRouting();
+        app.MapControllers();
 
         return app;
     }
 
     private void ConfigureServices()
     {
-        _services.AddUsersService()
-                 .AddChecksService(_configuration);
+        _services.AddChecksService(_configuration);
     }
 
     private void ConfigureLogger()
