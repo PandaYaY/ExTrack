@@ -7,9 +7,9 @@ namespace ExTrack.Checks;
 
 public interface IChecksRepository
 {
-    Task<CheckEntity?>      GetCheckById(int  checkId);
-    Task<List<CheckEntity>> GetUserChecks(int userId, int       page, int perPage);
-    Task<int>               AddCheckInfo(int  userId, CheckInfo checkInfo);
+    Task<CheckEntity?> GetCheckById(int checkId);
+    Task<List<CheckEntity>> GetUserChecks(int userId, int page, int perPage);
+    Task<int> AddCheckInfo(int userId, CheckInfo checkInfo);
 }
 
 public class ChecksRepository(NpgsqlConnection connection) : IChecksRepository
@@ -34,10 +34,10 @@ public class ChecksRepository(NpgsqlConnection connection) : IChecksRepository
                                                            )
                                                    )
                                            )       as products
-                                    from ex_track.public.checks c
-                                             join ex_track.public.shops s on c.shop_id = s.id
-                                             left join ex_track.public.true_shops ts on s.true_shop_id = ts.id
-                                             join ex_track.public.check_products cp on c.id = cp.check_id
+                                    from public.checks c
+                                             join public.shops s on c.shop_id = s.id
+                                             left join public.true_shops ts on s.true_shop_id = ts.id
+                                             join public.check_products cp on c.id = cp.check_id
                                              join public.products p on cp.product_id = p.id
                                              left join public.true_products tp on p.true_product_id = tp.id
                                     where ({0})
@@ -45,7 +45,6 @@ public class ChecksRepository(NpgsqlConnection connection) : IChecksRepository
                                     order by c.date desc
                                     {1}
                                     """;
-
 
     private static readonly string OneCheckSql = string.Format(CheckSql, "id = @checkId", string.Empty);
 

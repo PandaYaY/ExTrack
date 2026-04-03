@@ -3,7 +3,6 @@ using ExTrack.Checks.Infrastructure;
 using Npgsql;
 using Serilog;
 using Serilog.Exceptions;
-using SwaggerThemes;
 
 namespace ExTrack.Api;
 
@@ -67,9 +66,7 @@ public class StartUp
         // Add Swagger if is dev
         if (_isDev)
         {
-            app.UseSwagger();
-            // Themes here https://github.com/oqo0/swagger-themes
-            app.UseSwaggerUI(Theme.Gruvbox);
+            app.UseSwagger(); // TODO scalar
         }
 
         app.UseRouting();

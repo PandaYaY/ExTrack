@@ -1,11 +1,14 @@
-﻿using ExTrack.Api.Dto.Checks;
+﻿using Asp.Versioning;
+using ExTrack.Api.Dto.Checks;
 using ExTrack.Checks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ExTrack.Api.Controllers;
+namespace ExTrack.Api.Controllers.V1;
 
-[Route(ControllerRoute)]
-public class ChecksController(ILogger<ChecksController> logger, IChecksService checksService) : BaseController
+[ApiController]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
+public class ChecksController(ILogger<ChecksController> logger, IChecksService checksService) : ControllerBase
 {
     [HttpGet("{checkId:int}")]
     public async Task<IActionResult> GetCheck(int checkId)
