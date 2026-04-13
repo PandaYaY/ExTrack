@@ -20,6 +20,10 @@
   - include:
       file: 001_public/001_tables/006_products/002_indexes.sql
   - include:
+      file: 001_public/001_tables/009_operation_types/001_table.sql
+  - include:
+      file: 001_public/001_tables/009_operation_types/fill/001_common_types.sql
+  - include:
       file: 001_public/001_tables/007_checks/001_table.sql
   - include:
       file: 001_public/001_tables/007_checks/002_indexes.sql

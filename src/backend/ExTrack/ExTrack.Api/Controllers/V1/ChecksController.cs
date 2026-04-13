@@ -29,7 +29,14 @@ public class ChecksController(ILogger<ChecksController> logger, IChecksService c
     [HttpPost]
     public async Task<IActionResult> AddCheck(GetCheckInfoDto checkInfoDto)
     {
-        var checkId = await checksService.GetCheckInfoAsync(checkInfoDto);
-        return CreatedAtAction(nameof(GetCheck), checkId);
+        try
+        {
+            var checkInfo = await checksService.GetCheckInfoAsync(checkInfoDto);
+            return CreatedAtAction(nameof(GetCheck), new { checkId = checkInfo.CheckId }, checkInfo);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message.Replace($" (Parameter '{ex.ParamName}')", ""));
+        }
     }
 }

@@ -1,5 +1,7 @@
-﻿using System.Text.Json;
+﻿using System.Data;
+using System.Text.Json;
 using Dapper;
+using ExTrack.Api.Dto.Checks;
 using ExTrack.Checks.Models;
 using Npgsql;
 
@@ -7,9 +9,10 @@ namespace ExTrack.Checks;
 
 public interface IChecksRepository
 {
-    Task<CheckEntity?> GetCheckById(int checkId);
-    Task<List<CheckEntity>> GetUserChecks(int userId, int page, int perPage);
-    Task<int> AddCheckInfo(int userId, CheckInfo checkInfo);
+    Task<CheckEntity?>      GetCheckById(int                 checkId);
+    Task<CheckEntity?>      GetCheckByParams(GetCheckInfoDto checkParams);
+    Task<List<CheckEntity>> GetUserChecks(int                userId, int       page, int perPage);
+    Task<CheckEntity>       AddCheckInfo(int                 userId, CheckInfo checkInfo);
 }
 
 public class ChecksRepository(NpgsqlConnection connection) : IChecksRepository
@@ -42,18 +45,42 @@ public class ChecksRepository(NpgsqlConnection connection) : IChecksRepository
                                              left join public.true_products tp on p.true_product_id = tp.id
                                     where ({0})
                                     group by c.id, c.date, s.id, ts.id
-                                    order by c.date desc
                                     {1}
                                     """;
 
-    private static readonly string OneCheckSql = string.Format(CheckSql, "id = @checkId", string.Empty);
+    private static readonly string OneCheckSql = string.Format(CheckSql, "c.id = @checkId", string.Empty);
 
     private static readonly string UserChecksSql =
-        string.Format(CheckSql, "user_id = @userId", "limit @limit offset @offset");
+        string.Format(CheckSql, "user_id = @userId", "order by c.date desc limit @limit offset @offset");
 
     public async Task<CheckEntity?> GetCheckById(int checkId)
     {
-        var check = await connection.QueryFirstOrDefaultAsync<CheckEntity>(OneCheckSql, new { checkId });
+        var check = await GetCheckById(checkId, null);
+        return check;
+    }
+
+    private async Task<CheckEntity?> GetCheckById(int checkId, IDbTransaction? transaction)
+    {
+        var check = await connection.QueryFirstOrDefaultAsync<CheckEntity>(OneCheckSql, new { checkId }, transaction);
+        return check;
+    }
+
+    private static readonly string CheckByParamsSql =
+        string.Format(CheckSql,
+                      "c.fiscal_storage_device_number = @fn and c.fiscal_document_number = @fd and c.document_fiscal_attribute = @fp and c.operation_type = @ot",
+                      string.Empty);
+
+    public async Task<CheckEntity?> GetCheckByParams(GetCheckInfoDto checkParams)
+    {
+        var check = await connection.QueryFirstOrDefaultAsync<CheckEntity>(CheckByParamsSql,
+                                                                           new
+                                                                           {
+                                                                               fn = checkParams
+                                                                                   .FiscalStorageDeviceNumber,
+                                                                               fd = checkParams.FiscalDocumentNumber,
+                                                                               fp = checkParams.DocumentFiscalAttribute,
+                                                                               ot = checkParams.OperationType
+                                                                           });
         return check;
     }
 
@@ -64,11 +91,21 @@ public class ChecksRepository(NpgsqlConnection connection) : IChecksRepository
         return checks.ToList();
     }
 
-    public async Task<int> AddCheckInfo(int userId, CheckInfo checkInfo)
+    public async Task<CheckEntity> AddCheckInfo(int userId, CheckInfo checkInfo)
     {
         const string sql = "select * from public.add_check_info(@userId::integer, @json::jsonb);";
-        var checkId =
-            await connection.QueryFirstAsync<int>(sql, new { userId, json = JsonSerializer.Serialize(checkInfo) });
-        return checkId;
+
+        await connection.OpenAsync();
+        var transaction = await connection.BeginTransactionAsync();
+        var checkId = await connection.QuerySingleAsync<int>(sql, new
+                                                                  {
+                                                                      userId, json = JsonSerializer.Serialize(checkInfo)
+                                                                  }, transaction);
+        var newCheckData = await GetCheckById(checkId, transaction);
+        if (newCheckData is not null)
+            await transaction.CommitAsync();
+        else
+            throw new ArgumentException("check is not added", nameof(checkInfo));
+        return newCheckData;
     }
 }

@@ -12,11 +12,12 @@ public static class ServiceRegistration
         var config = configuration.GetSection("ProverkaCheka").Get<ProverkaChekaClientConfiguration>() ??
                      throw new ArgumentNullException(nameof(configuration), "ProverkaCheka configuration is missing");
 
-        services.AddRefitClient<IProverkaChekaClient>().ConfigureHttpClient(c =>
-        {
-            c.BaseAddress = config.BaseUrl;
-            c.Timeout     = config.Timeout;
-        });
+        services.AddRefitClient<IProverkaChekaClient>()
+                .ConfigureHttpClient(c =>
+                                     {
+                                         c.BaseAddress = config.BaseUrl;
+                                         c.Timeout     = TimeSpan.FromSeconds(config.TimeoutSeconds);
+                                     });
 
         return services;
     }

@@ -2,7 +2,7 @@
 
 public record ProverkaChekaClientConfiguration
 {
-    public required Uri      BaseUrl     { get; init; }
-    public required TimeSpan Timeout     { get; init; }
-    public required string   AccessToken { get; init; }
+    public required Uri    BaseUrl        { get; init; }
+    public required short  TimeoutSeconds { get; init; }
+    public required string AccessToken    { get; init; }
 }

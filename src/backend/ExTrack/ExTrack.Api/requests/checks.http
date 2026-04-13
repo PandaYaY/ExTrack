@@ -1,0 +1,51 @@
+@apiV1=http://localhost:8000/api/v1
+
+### GET get check by id
+GET {{apiV1}}/checks/5
+
+###
+
+### GET get user checks
+GET {{apiV1}}/checks?user_id=1
+
+###
+
+### GET get user checks page 2
+GET {{apiV1}}/checks?user_id=1&page=1&per_page=10
+
+###
+
+###
+POST {{apiV1}}/checks
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "fiscal_storage_device_number": 7380440700397497,
+  "fiscal_document_number": 37722,
+  "document_fiscal_attribute": 642911539,
+  "timestamp": "20250416T1924",
+  "operation_type": 1,
+  "sum": 138.00
+}
+
+###
+/// fn - fiscal_storage_device_number
+/// i  - fiscal_document_number
+/// fp - document_fiscal_attribute
+/// t  - timestamp (YYYYMMddThhmm)
+///
+// t=20250411T1957&s=997.49&fn=7281440701290151&i=68593&fp=102317806&n=1
+// t=20250416T1924&s=138.00&fn=7380440700397497&i=37722&fp=642911539&n=1
+// t=20250418T1956&s=417.00&fn=7380440700670998&i=37661&fp=2904396418&n=1
+// t=20250501T2117&s=418.78&fn=7380440800939715&i=80044&fp=938206949&n=1
+// t=20250420T1405&s=138.37&fn=7380440800939715&i=76471&fp=1496343574&n=1
+// t=20250418T2014&s=219.98&fn=7384440800324136&i=38479&fp=3930956527&n=1
+// t=20250428T2113&s=159.89&fn=7380440800939890&i=65031&fp=2289877677&n=1
+// t=20250409T2007&s=579.44&fn=7380440800939112&i=30641&fp=1310356009&n=1
+// t=20250428T2102&s=279.74&fn=7380440800939239&i=71348&fp=4258265017&n=1
+// t=20250413T2042&s=1289.83&fn=7384440800239987&i=40362&fp=4209807815&n=1
+// t=20250420T1320&s=2016.24&fn=7380440700423432&i=39373&fp=3855763741&n=1
+// t=20250417T2045&s=2244.04&fn=7380440800939723&i=60592&fp=1244394521&n=1
+// t=20250420T1410&s=759.95&fn=7384440800239704&i=6186&fp=1873643783&n=1
+// t=20250428T2050&s=944.60&fn=7380440800939371&i=70898&fp=648268802&n=1

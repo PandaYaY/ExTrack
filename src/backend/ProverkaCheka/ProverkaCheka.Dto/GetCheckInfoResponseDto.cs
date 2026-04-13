@@ -63,6 +63,15 @@ public record ItemDto(
     [property: JsonPropertyName("name")]
     string Name);
 
+/// <summary>
+/// Данные, которые пришли в запросе вручную
+/// </summary>
+/// <param name="Fn">fiscal_storage_device_number</param>
+/// <param name="Fd">fiscal_document_number</param>
+/// <param name="Fp">document_fiscal_attribute</param>
+/// <param name="Timestamp">timestamp</param>
+/// <param name="OperationType">operation_type</param>
+/// <param name="Sum">sum</param>
 public record RequestDataDto(
     [property: JsonPropertyName("fn")]
     string Fn,
