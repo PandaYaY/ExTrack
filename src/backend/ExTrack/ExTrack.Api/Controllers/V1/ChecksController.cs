@@ -27,7 +27,7 @@ public class ChecksController(ILogger<ChecksController> logger, IChecksService c
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddCheckInfo(GetCheckInfoDto checkInfoDto)
+    public async Task<IActionResult> AddCheck(GetCheckInfoDto checkInfoDto)
     {
         var checkId = await checksService.GetCheckInfoAsync(checkInfoDto);
         return CreatedAtAction(nameof(GetCheck), checkId);

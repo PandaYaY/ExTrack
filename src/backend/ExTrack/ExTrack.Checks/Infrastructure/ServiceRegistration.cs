@@ -9,23 +9,26 @@ namespace ExTrack.Checks.Infrastructure;
 
 public static class ServiceRegistration
 {
-    public static IServiceCollection AddChecksService(this IServiceCollection services, IConfiguration configuration)
+    extension(IServiceCollection services)
     {
-        // Регистрация AccessToken через IOptions<T>
-        services.Configure<ProverkaChekaClientConfiguration>(configuration.GetSection("ProverkaCheka"));
+        public IServiceCollection AddChecksService(IConfiguration configuration)
+        {
+            // Регистрация AccessToken через IOptions<T>
+            services.Configure<ProverkaChekaClientConfiguration>(configuration.GetSection("ProverkaCheka"));
 
-        services.AddScoped<IChecksService, ChecksService>()
-                .AddChecksRepository()
-                .AddProverkaChekaClient(configuration);
+            services.AddScoped<IChecksService, ChecksService>()
+                    .AddChecksRepository()
+                    .AddProverkaChekaClient(configuration);
 
-        return services;
-    }
+            return services;
+        }
 
-    private static IServiceCollection AddChecksRepository(this IServiceCollection services)
-    {
-        services.AddScoped<IChecksRepository, ChecksRepository>();
-        RegisterChecksRepositoryTypes();
-        return services;
+        private IServiceCollection AddChecksRepository()
+        {
+            services.AddScoped<IChecksRepository, ChecksRepository>();
+            RegisterChecksRepositoryTypes();
+            return services;
+        }
     }
 
     private static void RegisterChecksRepositoryTypes()

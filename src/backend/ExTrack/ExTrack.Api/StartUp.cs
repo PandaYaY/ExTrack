@@ -1,6 +1,8 @@
-﻿using Dapper;
+﻿using Asp.Versioning;
+using Dapper;
 using ExTrack.Checks.Infrastructure;
 using Npgsql;
+using Scalar.AspNetCore;
 using Serilog;
 using Serilog.Exceptions;
 
@@ -32,41 +34,26 @@ public class StartUp
 
     private WebApplication ConfigureWebApi()
     {
-        // Настройка CORS
-        _services.AddCors(options =>
-        {
-            options.AddPolicy("AllowFrontend", policy =>
-            {
-                policy.WithOrigins("http://localhost:3000")
-                      .AllowAnyHeader()
-                      .AllowAnyMethod()
-                      .AllowCredentials();
-            });
-        });
-
-        _services.AddControllers()
-                 .AddJsonOptions(options => { options.JsonSerializerOptions.PropertyNamingPolicy = null; });
+        _services.AddControllers();
 
         _services.AddApiVersioning(options =>
-                  {
-                      // reporting api versions will return the headers
-                      // "api-supported-versions" and "api-deprecated-versions"
-                      options.ReportApiVersions = true;
-                  })
+                                   {
+                                       // reporting api versions will return the headers
+                                       // "api-supported-versions" and "api-deprecated-versions"
+                                       options.ReportApiVersions = true;
+                                       options.DefaultApiVersion = new ApiVersion(1);
+                                   })
                  .AddMvc();
 
-        _services.AddEndpointsApiExplorer();
-        _services.AddSwaggerGen();
+        _services.AddOpenApi();
 
         var app = _appBuilder.Build();
-
-        // Использование CORS
-        app.UseCors("AllowFrontend");
 
         // Add Swagger if is dev
         if (_isDev)
         {
-            app.UseSwagger(); // TODO scalar
+            app.MapOpenApi();
+            app.MapScalarApiReference();
         }
 
         app.UseRouting();
@@ -82,11 +69,12 @@ public class StartUp
 
     private void ConfigureLogger()
     {
-        _appBuilder.Host.UseSerilog((context, services, configuration) =>
-                                        configuration.ReadFrom.Configuration(context.Configuration)
-                                                     .ReadFrom.Services(services)
-                                                     .Enrich.WithExceptionDetails()
-                                                     .Enrich.FromLogContext());
+        _appBuilder.Host.UseSerilog((context, services, configuration) => configuration.ReadFrom
+                                        .Configuration(context.Configuration)
+                                        .ReadFrom.Services(services)
+                                        .Enrich.WithAssemblyName()
+                                        .Enrich.WithExceptionDetails()
+                                        .Enrich.FromLogContext());
     }
 
     private void ConfigureDbs()
